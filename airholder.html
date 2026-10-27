@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirHolder / MagDock | Vértice 3D</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'v-darker': '#121212',
+                        'v-dark': '#2D2D2D',
+                        'v-orange': '#FF5A00',
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .toast-enter { animation: slideUp 0.3s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
+
+    <header class="bg-v-darker sticky top-0 z-50 border-b border-gray-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-3 md:py-4">
+                <a href="index.html">
+                    <img src="image_2.png" alt="Vértice 3D" class="h-14 sm:h-16 md:h-28 w-auto object-contain transition-all">
+                </a>
+                <a href="index.html" class="text-white hover:text-v-orange font-semibold transition flex items-center">
+                    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    <span class="hidden sm:inline">Volver al Catálogo</span>
+                    <span class="sm:hidden">Volver</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex-grow w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+            
+            <!-- Galería de Fotos -->
+            <div class="flex flex-col space-y-4">
+                <div class="bg-gray-100 rounded-xl border border-gray-200 overflow-hidden shadow-sm aspect-square relative">
+                    <img id="main-image" src="foto1.jpg" alt="AirHolder" class="w-full h-full object-cover">
+                </div>
+                
+                <div class="flex space-x-3 overflow-x-auto pb-2 scrollbar-hide">
+                    <img src="foto1.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-v-orange cursor-pointer thumbnail flex-shrink-0">
+                    <img src="foto2.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
+                    <img src="foto3.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
+                    <img src="foto4.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
+                    <img src="foto5.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
+                    <img src="foto6.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
+                    <img src="foto7.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
+                    <img src="foto8.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
+                    <img src="foto9.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
+                    <img src="foto10.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
+                </div>
+            </div>
+
+            <!-- Detalles del Producto -->
+            <div class="flex flex-col">
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-2">AirHolder / MagDock</h1>
+                <p class="text-2xl font-bold text-v-orange mb-6">$35.00</p>
+                <p class="text-sm md:text-base text-gray-600 mb-8 leading-relaxed">
+                    Soporte magnético premium impreso en 3D (15x8 cm). Diseñado para fijar tu termo a las máquinas de gimnasio, mantener tu teléfono accesible con su anclaje MagSafe y sujetar tus llaves en un solo lugar.
+                </p>
+
+                <!-- Campo de Personalización -->
+                <div class="mb-8">
+                    <label for="custom-name" class="block text-sm font-bold text-gray-900 uppercase mb-2">Personalización (Texto en relieve)</label>
+                    <input type="text" id="custom-name" placeholder="Ej. Emilio, Vértice3D..." class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-v-orange focus:border-transparent transition text-sm">
+                    <p class="text-xs text-gray-500 mt-2">Escribe el nombre o frase corta que deseas agregar a tu AirHolder (Opcional).</p>
+                </div>
+
+                <!-- Selección de Colores -->
+                <div class="mb-10">
+                    <h3 class="text-sm font-bold text-gray-900 uppercase mb-3">Color disponible: <span id="color-name" class="font-normal text-gray-600">Negro (PLA)</span></h3>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="selectColor('Negro', 'foto1.jpg', this)" class="w-10 h-10 rounded-full bg-gray-900 border-2 border-v-orange shadow-md color-btn ring-2 ring-transparent transition-all"></button>
+                        <button onclick="selectColor('Blanco', 'foto2.jpg', this)" class="w-10 h-10 rounded-full bg-white border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
+                        <button onclick="selectColor('Gris Claro', 'foto3.jpg', this)" class="w-10 h-10 rounded-full bg-gray-400 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
+                        <button onclick="selectColor('Rojo Intenso', 'foto4.jpg', this)" class="w-10 h-10 rounded-full bg-red-600 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
+                        <button onclick="selectColor('Azul Rey', 'foto5.jpg', this)" class="w-10 h-10 rounded-full bg-blue-700 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
+                        <button onclick="selectColor('Verde Oliva', 'foto6.jpg', this)" class="w-10 h-10 rounded-full bg-green-700 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
+                        <button onclick="selectColor('Amarillo', 'foto7.jpg', this)" class="w-10 h-10 rounded-full bg-yellow-400 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
+                        <button onclick="selectColor('Naranja Vértice', 'foto8.jpg', this)" class="w-10 h-10 rounded-full bg-orange-500 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
+                        <button onclick="selectColor('Morado', 'foto9.jpg', this)" class="w-10 h-10 rounded-full bg-purple-600 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
+                        <button onclick="selectColor('Rosa', 'foto10.jpg', this)" class="w-10 h-10 rounded-full bg-pink-500 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
+                    </div>
+                </div>
+
+                <button onclick="addCustomToCart()" class="bg-v-orange text-white py-4 px-8 rounded-md font-bold text-lg hover:bg-orange-600 transition shadow-xl w-full flex justify-center items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    Añadir al Carrito
+                </button>
+                
+                <div class="mt-10 border-t border-gray-100 pt-6">
+                    <h4 class="text-sm font-bold text-gray-900 uppercase mb-4">Especificaciones de Fabricación</h4>
+                    <ul class="space-y-3 text-sm text-gray-600">
+                        <li class="flex items-start"><svg class="w-5 h-5 mr-2 text-v-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span>Sistema de anclaje de 3 potentes imanes ocultos bajo un resistente laminado de goma azul.</span></li>
+                        <li class="flex items-start"><svg class="w-5 h-5 mr-2 text-v-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span>Unión sellada con adhesivo industrial 3M 300LSE para garantizar máxima fijación sin deslizamientos en superficies metálicas.</span></li>
+                        <li class="flex items-start"><svg class="w-5 h-5 mr-2 text-v-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span>Clip inferior especialmente diseñado para anclar llaves durante el entrenamiento.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-v-darker text-gray-400 py-8 border-t border-gray-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-xs">&copy; 2026 Vértice 3D. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-3"></div>
+
+    <script>
+        function changeImage(src, element) {
+            document.getElementById('main-image').src = src;
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.classList.remove('border-v-orange');
+                thumb.classList.add('border-transparent');
+            });
+            if(element) {
+                element.classList.remove('border-transparent');
+                element.classList.add('border-v-orange');
+            }
+        }
+
+        function selectColor(colorName, imageSrc, btn) {
+            document.getElementById('color-name').innerText = colorName;
+            document.getElementById('main-image').src = imageSrc;
+            document.querySelectorAll('.color-btn').forEach(b => {
+                b.classList.remove('border-v-orange');
+                b.classList.add('border-transparent');
+            });
+            btn.classList.remove('border-transparent');
+            btn.classList.add('border-v-orange');
+        }
+        
+        function addCustomToCart() {
+            const customName = document.getElementById('custom-name').value;
+            let productName = 'AirHolder MagSafe';
+            if(customName.trim() !== '') {
+                productName += ` (${customName})`;
+            }
+            addToCart(productName, 35);
+        }
+
+        function addToCart(productName, price) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'bg-v-darker text-white border-l-4 border-v-orange shadow-xl rounded px-4 py-3 flex items-center justify-between min-w-[220px] md:min-w-[250px] toast-enter';
+            toast.innerHTML = `
+                <div><p class="font-bold text-xs md:text-sm">Añadido al carrito</p><p class="text-[10px] md:text-xs text-gray-300">${productName} - $${price}</p></div>
+                <button onclick="this.parentElement.remove()" class="text-gray-400 hover:text-white ml-4 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                if(toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(100%)';
+                    toast.style.transition = 'all 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

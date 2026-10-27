@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vértice 3D | Taller de Impresión y Catálogo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'v-darker': '#121212',
+                        'v-dark': '#2D2D2D',
+                        'v-orange': '#FF5A00',
+                        'v-gray': '#F5F5F5'
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .product-card:hover img { transform: scale(1.05); }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
+
+    <!-- Navegación -->
+    <header class="bg-v-darker sticky top-0 z-50 border-b border-gray-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-3 md:py-4">
+                <div class="flex-shrink-0 flex items-center">
+                    <button id="mobile-menu-btn" class="md:hidden mr-4 text-white hover:text-v-orange transition">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                    <a href="index.html">
+                        <img src="image_2.png" alt="Vértice 3D" class="h-14 sm:h-16 md:h-28 w-auto object-contain transition-all">
+                    </a>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-white font-semibold hover:text-v-orange transition">Inicio</a>
+                    <a href="#catalogo" class="text-gray-300 hover:text-v-orange transition">Catálogo</a>
+                    <a href="#" class="text-gray-300 hover:text-v-orange transition">Redes Sociales</a>
+                    <a href="#contacto" class="text-gray-300 hover:text-v-orange transition">Contacto</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menú Móvil -->
+    <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[55] hidden opacity-0 transition-opacity duration-300"></div>
+    <div id="mobile-menu" class="fixed inset-y-0 left-0 w-64 bg-v-darker shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-[60] flex flex-col">
+        <div class="p-4 border-b border-gray-800 flex justify-between items-center">
+            <img src="image_2.png" alt="Vértice 3D" class="h-10 w-auto object-contain">
+            <button id="close-menu-btn" class="text-gray-400 hover:text-v-orange transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <nav class="flex flex-col p-4 space-y-5">
+            <a href="index.html" class="text-white font-bold hover:text-v-orange text-lg">Inicio</a>
+            <a href="#catalogo" onclick="toggleMenu()" class="text-white font-bold hover:text-v-orange text-lg">Catálogo</a>
+            <a href="#" class="text-white font-bold hover:text-v-orange text-lg">Redes Sociales</a>
+            <a href="#contacto" onclick="toggleMenu()" class="text-white font-bold hover:text-v-orange text-lg">Contacto</a>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="bg-v-dark text-white relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="taller_limpio.jpg" alt="Fondo Taller" class="w-full h-full object-cover opacity-25 blur-[1px]">
+            <div class="absolute inset-0 bg-gradient-to-r from-v-dark via-v-dark/95 to-transparent opacity-90"></div>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-20 lg:py-28 flex flex-col-reverse md:flex-row items-center">
+            <div class="md:w-1/2 pr-0 md:pr-12 mt-6 md:mt-0">
+                <div class="inline-block bg-v-orange text-white text-[10px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1 rounded mb-3 md:mb-4 uppercase tracking-wider">Austin, TX</div>
+                <h1 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-3 md:mb-4 tracking-tighter">
+                    TRANSFORMANDO <br><span class="text-v-orange">IDEAS EN REALIDAD</span>
+                </h1>
+                <p class="text-xs sm:text-sm md:text-lg text-gray-300 mb-6 md:mb-8 border-l-2 md:border-l-4 border-v-orange pl-3 md:pl-4 font-light leading-relaxed">
+                    Impresión 3D Funcional y Creativa a Medida. Desde soportes para gimnasio hasta prototipos especializados. Tú lo imaginas, nosotros lo fabricamos capa por capa.
+                </p>
+                <a href="#catalogo" class="bg-v-orange text-white px-6 py-3 md:px-8 md:py-4 rounded-md font-bold text-sm md:text-lg hover:bg-orange-600 transition shadow-lg inline-block text-center">Ver Catálogo Completo</a>
+            </div>
+            <div class="md:w-1/2 w-full flex justify-center">
+                <div class="relative rounded-xl md:rounded-2xl overflow-hidden shadow-2xl border-2 md:border-4 border-v-orange/30 group w-full max-w-sm md:max-w-xl">
+                    <img src="taller_limpio.jpg" alt="Taller Vértice 3D" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-700">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catálogo -->
+    <div id="catalogo" class="bg-white border-b border-gray-200 pt-12 md:pt-16 pb-6 md:pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900">Nuestro Catálogo</h2>
+            <p class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Explora todos nuestros diseños listos para imprimir en PLA, PETG y TPU.</p>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex-grow w-full">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            
+            <!-- TARJETA AIRHOLDER (Enlace al archivo airholder.html) -->
+            <a href="airholder.html" class="product-card bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden flex flex-col group cursor-pointer block">
+                <div class="h-48 md:h-56 overflow-hidden bg-gray-100 relative">
+                    <img src="foto1.jpg" alt="AirHolder MagSafe" class="w-full h-full object-cover transition-transform duration-500">
+                    <div class="absolute top-2 left-2 bg-v-dark text-white text-[10px] font-bold px-2 py-1 rounded uppercase">Más Vendido</div>
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="text-base md:text-md font-bold text-gray-900 group-hover:text-v-orange transition">AirHolder / MagDock</h3>
+                    <p class="text-xs text-gray-500 mt-1 mb-3 flex-grow leading-relaxed">Porta termo magnético con soporte MagSafe para máquinas de gimnasio.</p>
+                    <span class="text-lg font-bold text-v-orange">$35.00</span>
+                </div>
+            </a>
+
+            <!-- ESPACIO DISPONIBLE -->
+            <div class="product-card bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center p-6 min-h-[300px] md:min-h-[340px]">
+                <svg class="w-10 h-10 md:w-12 md:h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"></path></svg>
+                <p class="text-xs md:text-sm font-medium text-gray-500 text-center">Próximamente:<br>Nuevos Productos</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contacto" class="bg-v-dark text-gray-400 py-8 md:py-12 border-t border-gray-850 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0 flex flex-col items-center md:items-start text-center md:text-left">
+                <img src="image_2.png" alt="Vértice 3D Logo" class="h-12 md:h-16 w-auto mb-3 md:mb-4 object-contain">
+                <p class="text-xs md:text-sm">Impresión 3D de alta calidad en Austin, TX.</p>
+            </div>
+            <div class="text-xs md:text-sm text-center md:text-right">
+                <p>Contáctanos para proyectos a medida:<br class="md:hidden"> DM @vertices3d_tx</p>
+                <p class="mt-2 text-[10px] md:text-xs text-gray-500">&copy; 2026 Vértice 3D. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const btnMenu = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const overlay = document.getElementById('menu-overlay');
+
+        function toggleMenu() {
+            if (menu.classList.contains('-translate-x-full')) {
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.add('opacity-100'), 10);
+                menu.classList.remove('-translate-x-full');
+            } else {
+                menu.classList.add('-translate-x-full');
+                overlay.classList.remove('opacity-100');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        btnMenu.addEventListener('click', toggleMenu);
+        document.getElementById('close-menu-btn').addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+    </script>
+</body>
+</html>

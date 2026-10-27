@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Vértice 3D</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { 'v-dark': '#2D2D2D', 'v-orange': '#FF5A00' } } }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <!-- PANTALLA DE LOGIN -->
+    <div id="login-section" class="flex-grow flex items-center justify-center bg-v-dark">
+        <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
+            <div class="flex justify-center mb-6">
+                <img src="image_2.png" alt="Vértice 3D" class="h-16 object-contain">
+            </div>
+            <h2 class="text-2xl font-bold text-center mb-6">Acceso Administrativo</h2>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label class="block text-sm font-bold mb-2">Correo Electrónico</label>
+                    <input type="email" id="email" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-v-orange" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-bold mb-2">Contraseña</label>
+                    <input type="password" id="password" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-v-orange" required>
+                </div>
+                <button type="submit" class="w-full bg-v-orange text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition">
+                    Entrar
+                </button>
+                <p id="login-error" class="text-red-500 text-sm mt-3 text-center hidden">Credenciales incorrectas.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- PANEL DE CONTROL -->
+    <div id="dashboard-section" class="hidden flex-grow flex flex-col">
+        <header class="bg-v-dark text-white shadow-md">
+            <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <img src="image_2.png" alt="Vértice 3D" class="h-10 bg-white p-1 rounded">
+                    <h1 class="text-xl font-bold border-l-2 border-v-orange pl-4">Gestor de Catálogo</h1>
+                </div>
+                <button id="logout-btn" class="text-gray-300 hover:text-white transition">Salir</button>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 py-8 w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Formulario de Nuevo Producto -->
+            <div class="lg:col-span-1 bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4 border-b pb-2">Agregar Producto</h2>
+                <form id="product-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold mb-1">Nombre del Producto</label>
+                        <input type="text" id="prod-name" class="w-full px-3 py-2 border rounded focus:border-v-orange" required>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold mb-1">Precio Normal ($)</label>
+                            <input type="number" id="prod-price" class="w-full px-3 py-2 border rounded focus:border-v-orange" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-1 text-red-500">Descuento ($)</label>
+                            <input type="number" id="prod-discount" class="w-full px-3 py-2 border rounded focus:border-red-500" placeholder="Opcional">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold mb-1">Colores Disponibles</label>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <label><input type="checkbox" value="Verde Militar" class="color-cb"> Verde Militar</label>
+                            <label><input type="checkbox" value="Amarillo" class="color-cb"> Amarillo</label>
+                            <label><input type="checkbox" value="Azul" class="color-cb"> Azul</label>
+                            <label><input type="checkbox" value="Rojo" class="color-cb"> Rojo</label>
+                            <label><input type="checkbox" value="Gris Metalizado" class="color-cb"> Gris Metal</label>
+                            <label><input type="checkbox" value="Naranja" class="color-cb"> Naranja</label>
+                            <label><input type="checkbox" value="Negro" class="color-cb"> Negro</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold mb-1">Descripción</label>
+                        <textarea id="prod-desc" rows="3" class="w-full px-3 py-2 border rounded focus:border-v-orange" required></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold mb-1">Enlaces de Imágenes (URLs)</label>
+                        <textarea id="prod-images" rows="2" class="w-full px-3 py-2 border rounded focus:border-v-orange text-sm" placeholder="https://i.ibb.co/foto1.png, https://i.ibb.co/foto2.png" required></textarea>
+                        <p class="text-xs text-gray-500 mt-1">Pega los enlaces separados por comas.</p>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="w-full bg-v-orange text-white font-bold py-2 rounded hover:bg-orange-600 transition">
+                        Guardar y Publicar
+                    </button>
+                    <p id="upload-status" class="text-sm text-center font-bold text-blue-600 hidden">Guardando producto...</p>
+                </form>
+            </div>
+
+            <!-- Lista de Productos -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4 border-b pb-2">Inventario Actual</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Producto</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Precio</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Colores</th>
+                                <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table" class="bg-white divide-y divide-gray-200">
+                            <!-- Los productos aparecerán aquí -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FIREBASE SDK & LÓGICA -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDCOw5_E9feHDgdRoaqdLj1kxdNDdoh6BI",
+            authDomain: "vertice-3d.firebaseapp.com",
+            projectId: "vertice-3d",
+            messagingSenderId: "152713528492",
+            appId: "1:152713528492:web:518dc83577d5827cc28b09"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const loginSec = document.getElementById('login-section');
+        const dashSec = document.getElementById('dashboard-section');
+        const loginForm = document.getElementById('login-form');
+        const productForm = document.getElementById('product-form');
+        const productsTable = document.getElementById('products-table');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loginSec.classList.add('hidden');
+                dashSec.classList.remove('hidden');
+                loadProducts();
+            } else {
+                loginSec.classList.remove('hidden');
+                dashSec.classList.add('hidden');
+            }
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const eVal = document.getElementById('email').value;
+            const pVal = document.getElementById('password').value;
+            signInWithEmailAndPassword(auth, eVal, pVal).catch(() => {
+                document.getElementById('login-error').classList.remove('hidden');
+            });
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
+
+        productForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            document.getElementById('submit-btn').classList.add('hidden');
+            document.getElementById('upload-status').classList.remove('hidden');
+
+            try {
+                const name = document.getElementById('prod-name').value;
+                const price = document.getElementById('prod-price').value;
+                const discount = document.getElementById('prod-discount').value || null;
+                const desc = document.getElementById('prod-desc').value;
+                
+                const colorBoxes = document.querySelectorAll('.color-cb:checked');
+                const colors = Array.from(colorBoxes).map(cb => cb.value);
+
+                // Procesar URLs separadas por coma
+                const imagesRaw = document.getElementById('prod-images').value;
+                const imageUrls = imagesRaw.split(',').map(url => url.trim()).filter(url => url !== "");
+
+                await addDoc(collection(db, "productos"), {
+                    nombre: name,
+                    precio: Number(price),
+                    precio_descuento: discount ? Number(discount) : null,
+                    colores: colors,
+                    descripcion: desc,
+                    imagenes: imageUrls,
+                    fecha: new Date().toISOString()
+                });
+
+                productForm.reset();
+                loadProducts();
+            } catch (error) {
+                console.error("Error guardando:", error);
+            } finally {
+                document.getElementById('submit-btn').classList.remove('hidden');
+                document.getElementById('upload-status').classList.add('hidden');
+            }
+        });
+
+        async function loadProducts() {
+            productsTable.innerHTML = '<tr><td colspan="4" class="text-center py-4">Cargando...</td></tr>';
+            const querySnapshot = await getDocs(collection(db, "productos"));
+            productsTable.innerHTML = '';
+            
+            querySnapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="px-4 py-3 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <img src="${data.imagenes[0] || 'image_2.png'}" class="h-10 w-10 object-cover rounded mr-3 bg-gray-100">
+                            <div class="text-sm font-medium text-gray-900">${data.nombre}</div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm font-bold text-gray-900">
+                        $${data.precio} ${data.precio_descuento ? `<span class="text-red-500 text-xs line-through ml-1">$${data.precio_descuento}</span>` : ''}
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-xs text-gray-500">
+                        ${data.colores.join(', ') || 'N/A'}
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-center text-sm font-medium">
+                        <button onclick="window.deleteProd('${docSnap.id}')" class="text-red-600 hover:text-red-900">Eliminar</button>
+                    </td>
+                `;
+                productsTable.appendChild(tr);
+            });
+        }
+
+        window.deleteProd = async (id) => {
+            if(confirm("¿Seguro que deseas eliminar este producto?")) {
+                await deleteDoc(doc(db, "productos", id));
+                loadProducts();
+            }
+        };
+    </script>
+</body>
+</html>
