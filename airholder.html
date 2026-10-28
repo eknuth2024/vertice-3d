@@ -49,15 +49,19 @@
             <!-- Galería de Fotos -->
             <div class="flex flex-col space-y-4">
                 <div class="bg-gray-100 rounded-xl border border-gray-200 overflow-hidden shadow-sm aspect-square relative">
-                    <img id="main-image" src="airholder-negro.webp" alt="AirHolder / MagDock en color Negro" class="w-full h-full object-cover">
+                    <img id="main-image" src="34d051f3-77c0-4d22-94e9-48a67f30c8b5.jpg" alt="AirHolder azul sujeto magnéticamente a una máquina de gimnasio con soporte MagSafe" class="w-full h-full object-contain">
                 </div>
                 
                 <div>
                     <h2 class="text-sm font-bold text-gray-900 mb-3">Selecciona tu color</h2>
                     <div class="flex gap-3 overflow-x-auto pb-2" aria-label="Colores del AirHolder">
-                    <button type="button" data-color="Negro" data-image="airholder-negro.webp" onclick="selectVariant(this)" aria-pressed="true" class="variant-btn flex-shrink-0 w-24 md:w-28 rounded-lg border-2 border-v-orange p-1 hover:border-v-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500">
+                    <button type="button" data-color="" data-image="34d051f3-77c0-4d22-94e9-48a67f30c8b5.jpg" onclick="selectVariant(this)" aria-pressed="true" class="variant-btn flex-shrink-0 w-24 md:w-28 rounded-lg border-2 border-v-orange p-1 hover:border-v-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500">
+                        <img src="34d051f3-77c0-4d22-94e9-48a67f30c8b5.jpg" alt="Demostración del anclaje magnético y MagSafe" loading="lazy" class="w-full aspect-square object-contain rounded-md">
+                        <span class="block text-xs font-semibold mt-2 mb-1">En el gimnasio</span>
+                    </button>
+                    <button type="button" data-color="Negro" data-image="airholder-negro.webp" onclick="selectVariant(this)" aria-pressed="false" class="variant-btn flex-shrink-0 w-24 md:w-28 rounded-lg border-2 border-transparent p-1 hover:border-v-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500">
                         <img src="airholder-negro.webp" alt="AirHolder Negro" loading="lazy" class="w-full aspect-square object-contain rounded-md">
-                        <span class="block text-xs font-semibold mt-2 mb-1">Negro</span>
+                        <span class="block text-xs font-semibold mt-2 mb-1">Selecciona un color</span>
                     </button>
                     <button type="button" data-color="Amarillo" data-image="airholder-amarillo.webp" onclick="selectVariant(this)" aria-pressed="false" class="variant-btn flex-shrink-0 w-24 md:w-28 rounded-lg border-2 border-transparent p-1 hover:border-v-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500">
                         <img src="airholder-amarillo.webp" alt="AirHolder Amarillo" loading="lazy" class="w-full aspect-square object-contain rounded-md">
@@ -137,8 +141,8 @@
         function selectVariant(button) {
             const image = document.getElementById('main-image');
             image.src = button.dataset.image;
-            image.alt = 'AirHolder / MagDock en color ' + button.dataset.color;
-            document.getElementById('color-name').textContent = button.dataset.color;
+            image.alt = button.dataset.color ? 'AirHolder / MagDock en color ' + button.dataset.color : 'AirHolder azul con anclaje magnético y soporte MagSafe en el gimnasio';
+            document.getElementById('color-name').textContent = button.dataset.color || 'Selecciona un color';
             document.querySelectorAll('.variant-btn').forEach(option => {
                 const selected = option === button;
                 option.setAttribute('aria-pressed', String(selected));
@@ -148,6 +152,10 @@
         }
 
         function addCustomToCart() {
+            if (document.getElementById('color-name').textContent === 'Selecciona un color') {
+                alert('Selecciona el color que deseas en las fotos del producto.');
+                return;
+            }
             const customName = document.getElementById('custom-name').value;
             let productName = 'AirHolder MagSafe - ' + document.getElementById('color-name').textContent;
             if(customName.trim() !== '') {
