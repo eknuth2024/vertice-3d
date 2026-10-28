@@ -49,20 +49,41 @@
             <!-- Galería de Fotos -->
             <div class="flex flex-col space-y-4">
                 <div class="bg-gray-100 rounded-xl border border-gray-200 overflow-hidden shadow-sm aspect-square relative">
-                    <img id="main-image" src="foto1.jpg" alt="AirHolder" class="w-full h-full object-cover">
+                    <img id="main-image" src="airholder-negro.webp" alt="AirHolder / MagDock en color Negro" class="w-full h-full object-cover">
                 </div>
                 
-                <div class="flex space-x-3 overflow-x-auto pb-2 scrollbar-hide">
-                    <img src="foto1.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-v-orange cursor-pointer thumbnail flex-shrink-0">
-                    <img src="foto2.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
-                    <img src="foto3.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
-                    <img src="foto4.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
-                    <img src="foto5.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
-                    <img src="foto6.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
-                    <img src="foto7.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
-                    <img src="foto8.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
-                    <img src="foto9.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
-                    <img src="foto10.jpg" onclick="changeImage(this.src, this)" class="h-16 w-16 md:h-24 md:w-24 object-cover rounded-lg border-2 border-transparent hover:border-gray-300 cursor-pointer thumbnail flex-shrink-0">
+                <div>
+                    <h2 class="text-sm font-bold text-gray-900 mb-3">Selecciona tu color</h2>
+                    <div class="flex gap-3 overflow-x-auto pb-2" aria-label="Colores del AirHolder">
+                    <button type="button" data-color="Negro" data-image="airholder-negro.webp" onclick="selectVariant(this)" aria-pressed="true" class="variant-btn flex-shrink-0 w-24 md:w-28 rounded-lg border-2 border-v-orange p-1 hover:border-v-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500">
+                        <img src="airholder-negro.webp" alt="AirHolder Negro" loading="lazy" class="w-full aspect-square object-contain rounded-md">
+                        <span class="block text-xs font-semibold mt-2 mb-1">Negro</span>
+                    </button>
+                    <button type="button" data-color="Amarillo" data-image="airholder-amarillo.webp" onclick="selectVariant(this)" aria-pressed="false" class="variant-btn flex-shrink-0 w-24 md:w-28 rounded-lg border-2 border-transparent p-1 hover:border-v-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500">
+                        <img src="airholder-amarillo.webp" alt="AirHolder Amarillo" loading="lazy" class="w-full aspect-square object-contain rounded-md">
+                        <span class="block text-xs font-semibold mt-2 mb-1">Amarillo</span>
+                    </button>
+                    <button type="button" data-color="Plateado" data-image="airholder-plateado.webp" onclick="selectVariant(this)" aria-pressed="false" class="variant-btn flex-shrink-0 w-24 md:w-28 rounded-lg border-2 border-transparent p-1 hover:border-v-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500">
+                        <img src="airholder-plateado.webp" alt="AirHolder Plateado" loading="lazy" class="w-full aspect-square object-contain rounded-md">
+                        <span class="block text-xs font-semibold mt-2 mb-1">Plateado</span>
+                    </button>
+                    <button type="button" data-color="Rojo" data-image="airholder-rojo.webp" onclick="selectVariant(this)" aria-pressed="false" class="variant-btn flex-shrink-0 w-24 md:w-28 rounded-lg border-2 border-transparent p-1 hover:border-v-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500">
+                        <img src="airholder-rojo.webp" alt="AirHolder Rojo" loading="lazy" class="w-full aspect-square object-contain rounded-md">
+                        <span class="block text-xs font-semibold mt-2 mb-1">Rojo</span>
+                    </button>
+                    <button type="button" data-color="Rosado" data-image="airholder-rosado.webp" onclick="selectVariant(this)" aria-pressed="false" class="variant-btn flex-shrink-0 w-24 md:w-28 rounded-lg border-2 border-transparent p-1 hover:border-v-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500">
+                        <img src="airholder-rosado.webp" alt="AirHolder Rosado" loading="lazy" class="w-full aspect-square object-contain rounded-md">
+                        <span class="block text-xs font-semibold mt-2 mb-1">Rosado</span>
+                    </button>
+                    <button type="button" data-color="Verde militar" data-image="airholder-verde-militar.webp" onclick="selectVariant(this)" aria-pressed="false" class="variant-btn flex-shrink-0 w-24 md:w-28 rounded-lg border-2 border-transparent p-1 hover:border-v-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500">
+                        <img src="airholder-verde-militar.webp" alt="AirHolder Verde militar" loading="lazy" class="w-full aspect-square object-contain rounded-md">
+                        <span class="block text-xs font-semibold mt-2 mb-1">Verde militar</span>
+                    </button>
+                    <button type="button" data-color="Verde" data-image="airholder-verde.webp" onclick="selectVariant(this)" aria-pressed="false" class="variant-btn flex-shrink-0 w-24 md:w-28 rounded-lg border-2 border-transparent p-1 hover:border-v-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500">
+                        <img src="airholder-verde.webp" alt="AirHolder Verde" loading="lazy" class="w-full aspect-square object-contain rounded-md">
+                        <span class="block text-xs font-semibold mt-2 mb-1">Verde</span>
+                    </button>
+                    </div>
                 </div>
             </div>
 
@@ -83,19 +104,8 @@
 
                 <!-- Selección de Colores -->
                 <div class="mb-10">
-                    <h3 class="text-sm font-bold text-gray-900 uppercase mb-3">Color disponible: <span id="color-name" class="font-normal text-gray-600">Negro (PLA)</span></h3>
-                    <div class="flex flex-wrap gap-3">
-                        <button onclick="selectColor('Negro', 'foto1.jpg', this)" class="w-10 h-10 rounded-full bg-gray-900 border-2 border-v-orange shadow-md color-btn ring-2 ring-transparent transition-all"></button>
-                        <button onclick="selectColor('Blanco', 'foto2.jpg', this)" class="w-10 h-10 rounded-full bg-white border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
-                        <button onclick="selectColor('Gris Claro', 'foto3.jpg', this)" class="w-10 h-10 rounded-full bg-gray-400 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
-                        <button onclick="selectColor('Rojo Intenso', 'foto4.jpg', this)" class="w-10 h-10 rounded-full bg-red-600 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
-                        <button onclick="selectColor('Azul Rey', 'foto5.jpg', this)" class="w-10 h-10 rounded-full bg-blue-700 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
-                        <button onclick="selectColor('Verde Oliva', 'foto6.jpg', this)" class="w-10 h-10 rounded-full bg-green-700 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
-                        <button onclick="selectColor('Amarillo', 'foto7.jpg', this)" class="w-10 h-10 rounded-full bg-yellow-400 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
-                        <button onclick="selectColor('Naranja Vértice', 'foto8.jpg', this)" class="w-10 h-10 rounded-full bg-orange-500 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
-                        <button onclick="selectColor('Morado', 'foto9.jpg', this)" class="w-10 h-10 rounded-full bg-purple-600 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
-                        <button onclick="selectColor('Rosa', 'foto10.jpg', this)" class="w-10 h-10 rounded-full bg-pink-500 border-2 border-transparent shadow-md color-btn ring-2 ring-transparent transition-all"></button>
-                    </div>
+                    <h3 class="text-sm font-bold text-gray-900 uppercase mb-3">Color disponible: <span id="color-name" class="font-normal text-gray-600">Negro</span></h3>
+                    <p class="text-sm text-gray-600">Elige una de las fotos de colores debajo de la imagen principal para ver tu AirHolder.</p>
                 </div>
 
                 <button onclick="addCustomToCart()" class="bg-v-orange text-white py-4 px-8 rounded-md font-bold text-lg hover:bg-orange-600 transition shadow-xl w-full flex justify-center items-center">
@@ -124,32 +134,22 @@
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-3"></div>
 
     <script>
-        function changeImage(src, element) {
-            document.getElementById('main-image').src = src;
-            document.querySelectorAll('.thumbnail').forEach(thumb => {
-                thumb.classList.remove('border-v-orange');
-                thumb.classList.add('border-transparent');
+        function selectVariant(button) {
+            const image = document.getElementById('main-image');
+            image.src = button.dataset.image;
+            image.alt = 'AirHolder / MagDock en color ' + button.dataset.color;
+            document.getElementById('color-name').textContent = button.dataset.color;
+            document.querySelectorAll('.variant-btn').forEach(option => {
+                const selected = option === button;
+                option.setAttribute('aria-pressed', String(selected));
+                option.classList.toggle('border-v-orange', selected);
+                option.classList.toggle('border-transparent', !selected);
             });
-            if(element) {
-                element.classList.remove('border-transparent');
-                element.classList.add('border-v-orange');
-            }
         }
 
-        function selectColor(colorName, imageSrc, btn) {
-            document.getElementById('color-name').innerText = colorName;
-            document.getElementById('main-image').src = imageSrc;
-            document.querySelectorAll('.color-btn').forEach(b => {
-                b.classList.remove('border-v-orange');
-                b.classList.add('border-transparent');
-            });
-            btn.classList.remove('border-transparent');
-            btn.classList.add('border-v-orange');
-        }
-        
         function addCustomToCart() {
             const customName = document.getElementById('custom-name').value;
-            let productName = 'AirHolder MagSafe';
+            let productName = 'AirHolder MagSafe - ' + document.getElementById('color-name').textContent;
             if(customName.trim() !== '') {
                 productName += ` (${customName})`;
             }
@@ -161,9 +161,10 @@
             const toast = document.createElement('div');
             toast.className = 'bg-v-darker text-white border-l-4 border-v-orange shadow-xl rounded px-4 py-3 flex items-center justify-between min-w-[220px] md:min-w-[250px] toast-enter';
             toast.innerHTML = `
-                <div><p class="font-bold text-xs md:text-sm">Añadido al carrito</p><p class="text-[10px] md:text-xs text-gray-300">${productName} - $${price}</p></div>
+                <div><p class="font-bold text-xs md:text-sm">Añadido al carrito</p><p class="text-[10px] md:text-xs text-gray-300"><span class="toast-product"></span> - ${price}</p></div>
                 <button onclick="this.parentElement.remove()" class="text-gray-400 hover:text-white ml-4 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             `;
+            toast.querySelector('.toast-product').textContent = productName;
             container.appendChild(toast);
             setTimeout(() => {
                 if(toast.parentElement) {
