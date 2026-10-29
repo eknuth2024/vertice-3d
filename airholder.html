@@ -53,6 +53,7 @@
             .product-details ul { font-size: 13px; line-height: 1.5; }
         }
     </style>
+    <script src="cart.js" defer></script>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
 
@@ -67,6 +68,10 @@
                     <span class="hidden sm:inline">Volver al Catálogo</span>
                     <span class="sm:hidden">Volver</span>
                 </a>
+                <button type="button" data-open-cart class="cart-trigger" aria-label="Abrir carrito" aria-haspopup="dialog">
+                    <svg aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3h2l2.4 12h11l3-9H6M9 20h.01M18 20h.01"/></svg>
+                    <span data-cart-count class="cart-badge">0</span>
+                </button>
             </div>
         </div>
         <div aria-hidden="true" class="h-1 w-full bg-gradient-to-r from-[#FF5A00] via-orange-600 to-black"></div>
@@ -131,7 +136,7 @@
                 <!-- Campo de Personalización -->
                 <div class="mb-8">
                     <label for="custom-name" class="block text-sm font-bold text-gray-900 uppercase mb-2">Personalización (Texto en relieve)</label>
-                    <input type="text" id="custom-name" placeholder="Ej. Emilio, Vértice3D..." class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-v-orange focus:border-transparent transition text-sm">
+                    <input type="text" id="custom-name" maxlength="80" placeholder="Ej. Emilio, Vértice3D..." class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-v-orange focus:border-transparent transition text-sm">
                     <p class="text-xs text-gray-500 mt-2">Escribe el nombre o frase corta que deseas agregar a tu Airholder (Opcional).</p>
                 </div>
 
@@ -181,36 +186,10 @@
         }
 
         function addCustomToCart() {
-            if (document.getElementById('color-name').textContent === 'Selecciona un color') {
+            const color = document.getElementById('color-name').textContent.trim();
+            if (!window.VerticeCart.add(color, document.getElementById('custom-name').value)) {
                 alert('Selecciona el color que deseas en las fotos del producto.');
-                return;
             }
-            const customName = document.getElementById('custom-name').value;
-            let productName = 'Airholder - ' + document.getElementById('color-name').textContent;
-            if(customName.trim() !== '') {
-                productName += ` (${customName})`;
-            }
-            addToCart(productName, 35);
-        }
-
-        function addToCart(productName, price) {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'bg-v-darker text-white border-l-4 border-v-orange shadow-xl rounded px-4 py-3 flex items-center justify-between min-w-[220px] md:min-w-[250px] toast-enter';
-            toast.innerHTML = `
-                <div><p class="font-bold text-xs md:text-sm">Añadido al carrito</p><p class="text-[10px] md:text-xs text-gray-300"><span class="toast-product"></span> - ${price}</p></div>
-                <button onclick="this.parentElement.remove()" class="text-gray-400 hover:text-white ml-4 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-            `;
-            toast.querySelector('.toast-product').textContent = productName;
-            container.appendChild(toast);
-            setTimeout(() => {
-                if(toast.parentElement) {
-                    toast.style.opacity = '0';
-                    toast.style.transform = 'translateY(100%)';
-                    toast.style.transition = 'all 0.3s ease';
-                    setTimeout(() => toast.remove(), 300);
-                }
-            }, 3000);
         }
     </script>
 </body>
