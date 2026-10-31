@@ -62,7 +62,34 @@
         .v-language-bar{justify-content:center;gap:8px;padding:4px 16px;background:#FF5A00;border-bottom:1px solid #e65100;color:#fff;font-size:12px;font-weight:600}
         .v-language-bar select{min-width:0;min-height:36px;padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;background:#fff;color:#242424;font-size:13px;font-weight:400;box-shadow:none;cursor:pointer}
         .v-language-bar select:focus-visible{outline:2px solid #242424;outline-offset:2px}
-    </style>
+    
+        /* Translucent menu highlights with a soft side reflection. */
+        header nav>a,#mobile-menu nav>a{
+            position:relative;isolation:isolate;display:inline-flex;align-items:center;
+            min-height:44px;padding:8px 10px;border:1px solid transparent;border-radius:12px;
+            transition:background .2s ease,border-color .2s ease,box-shadow .2s ease;
+        }
+        header nav>a::before,#mobile-menu nav>a::before{
+            content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+            background:linear-gradient(110deg,rgba(255,255,255,.5),rgba(255,255,255,.12) 15%,transparent 45%);
+            opacity:0;transition:opacity .2s ease;
+        }
+        #mobile-menu{background:#555b63;color:#fff}
+        #mobile-menu nav>a,#close-menu-btn{color:#fff}
+        #mobile-menu>div:first-child{border-color:rgba(255,255,255,.18)}
+        #mobile-menu nav{gap:6px}
+        #mobile-menu nav>a{width:100%;font-size:14px;font-weight:600}
+        header nav>a:focus-visible,#mobile-menu nav>a:focus-visible{outline:2px solid #FF5A00;outline-offset:2px}
+        @media(hover:hover){
+            header nav>a:hover{background:rgba(255,90,0,.045);border-color:rgba(255,90,0,.25);backdrop-filter:blur(10px) saturate(140%);-webkit-backdrop-filter:blur(10px) saturate(140%);box-shadow:inset 1px 0 0 rgba(255,255,255,.8),0 3px 10px rgba(0,0,0,.06)}
+            #mobile-menu nav>a:hover{color:#fff;background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.3);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:inset 1px 0 0 rgba(255,255,255,.4)}
+            header nav>a:hover::before,#mobile-menu nav>a:hover::before{opacity:1}
+        }
+        #mobile-menu nav>a:active{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3)}
+        @media(prefers-reduced-motion:reduce){header nav>a,#mobile-menu nav>a,header nav>a::before,#mobile-menu nav>a::before{transition:none}}
+
+    .glass-product-link{padding:10px;border:1px solid transparent;border-radius:12px;min-height:44px;display:inline-flex;align-items:center}.glass-product-link:hover{background:rgba(255,90,0,.045);border-color:rgba(255,90,0,.25);box-shadow:inset 1px 0 0 rgba(255,255,255,.8)}
+</style>
     <script src="v-language.js?v=calculator-4" defer></script>
     <script src="cart.js?v=2" defer></script>
 </head>
@@ -79,7 +106,7 @@
                 <a href="index.html">
                     <img src="vertice-logo-transparente.png" alt="Vértice 3D" class="h-20 md:h-24 w-auto max-w-[260px] object-contain">
                 </a>
-                <a href="calculator.html" class="text-gray-900 hover:text-v-orange text-xs font-semibold">Calculadora de impresión</a>
+                <a href="calculator.html" class="glass-product-link text-gray-900 hover:text-v-orange text-xs font-semibold">Calculadora de impresión</a>
                 <a href="index.html" class="text-gray-900 hover:text-v-orange font-semibold transition flex items-center">
                     <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     <span class="hidden sm:inline">Volver al Catálogo</span>
