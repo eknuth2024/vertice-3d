@@ -116,7 +116,7 @@ window.addEventListener('vertice:language',update);update();
    if(file&&!/\.(stl|step|stp|3mf|obj)$/i.test(file.name)){status('Usa un archivo STL, STEP, STP, 3MF u OBJ.');return;}
    if(link){try{const url=new URL(link);if(!['https:','http:'].includes(url.protocol))throw Error();}catch{status('Revisa el enlace al modelo. Debe comenzar con https:// o http://.');return;}}
    const rows=[
-    ['Tu nombre',value('name')],['Correo o usuario de Instagram para responderte',value('contact')],
+    ['Tu nombre',value('name')],['Correo o teléfono de contacto',value('contact')],
     ['Archivo del modelo (opcional)',file?file.name:t('No indicado')],['Enlace al modelo (opcional)',link||t('No indicado')],
     ['Cantidad de piezas',value('quantity')],['Medidas deseadas (largo × ancho × alto)',value('size')+' '+value('units')],
     ['Material preferido',value('material')||t('Necesito asesoría')],['Color preferido (opcional)',value('color')||t('No indicado')],
