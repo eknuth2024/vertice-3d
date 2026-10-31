@@ -90,7 +90,33 @@
 @media print{body>*{display:none!important}.calculator-page{display:block!important}.calculator-page>*{display:none!important}#calc-print-summary{display:block!important;white-space:pre-wrap;overflow-wrap:anywhere;font:12pt/1.6 Arial;color:#000;background:#fff}}
 
 .file-picker-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.file-picker-row .calc-secondary{margin-top:0}.file-picker-row [data-file-name]{overflow-wrap:anywhere;min-width:0}
-</style>
+
+        /* Translucent menu highlights with a soft side reflection. */
+        header nav>a,#mobile-menu nav>a{
+            position:relative;isolation:isolate;display:inline-flex;align-items:center;
+            min-height:44px;padding:8px 10px;border:1px solid transparent;border-radius:12px;
+            transition:background .2s ease,border-color .2s ease,box-shadow .2s ease;
+        }
+        header nav>a::before,#mobile-menu nav>a::before{
+            content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+            background:linear-gradient(110deg,rgba(255,255,255,.5),rgba(255,255,255,.12) 15%,transparent 45%);
+            opacity:0;transition:opacity .2s ease;
+        }
+        #mobile-menu{background:#555b63;color:#fff}
+        #mobile-menu nav>a,#close-menu-btn{color:#fff}
+        #mobile-menu>div:first-child{border-color:rgba(255,255,255,.18)}
+        #mobile-menu nav{gap:6px}
+        #mobile-menu nav>a{width:100%;font-size:14px;font-weight:600}
+        header nav>a:focus-visible,#mobile-menu nav>a:focus-visible{outline:2px solid #FF5A00;outline-offset:2px}
+        @media(hover:hover){
+            header nav>a:hover{background:rgba(255,90,0,.045);border-color:rgba(255,90,0,.25);backdrop-filter:blur(10px) saturate(140%);-webkit-backdrop-filter:blur(10px) saturate(140%);box-shadow:inset 1px 0 0 rgba(255,255,255,.8),0 3px 10px rgba(0,0,0,.06)}
+            #mobile-menu nav>a:hover{color:#fff;background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.3);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:inset 1px 0 0 rgba(255,255,255,.4)}
+            header nav>a:hover::before,#mobile-menu nav>a:hover::before{opacity:1}
+        }
+        #mobile-menu nav>a:active{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3)}
+        @media(prefers-reduced-motion:reduce){header nav>a,#mobile-menu nav>a,header nav>a::before,#mobile-menu nav>a::before{transition:none}}
+
+    </style>
     <script src="v-language.js?v=contact-10" defer></script>
     <script src="cart.js?v=2" defer></script>
 <script src="calculator.js?v=contact-7" defer></script>
