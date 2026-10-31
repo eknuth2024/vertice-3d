@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Impresión 3D a medida, accesorios funcionales y prototipos en Austin, TX. Explora Airholder y los productos de Vértice 3D.">
     <title>Vértice 3D | Taller de Impresión y Catálogo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -56,17 +57,28 @@
             footer img { height: 36px; }
             footer .mb-6 { margin-bottom: 12px; }
         }
+    
+        .v-language-bar{display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:4px 16px;background:#f3f4f6;border-bottom:1px solid #e5e7eb;color:#242424;font-size:12px}
+        .v-language-bar select{min-height:36px;padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;background:white;font-size:13px}
+        header nav{white-space:nowrap}
+        @media(min-width:768px){header nav{gap:20px!important;margin:0!important}header nav>a{margin:0!important}}
     </style>
-    <script src="cart.js" defer></script>
+    <script src="v-language.js?v=1" defer></script>
+    <script src="cart.js?v=2" defer></script>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
 
     <!-- Navegación -->
+    <div class="v-language-bar" data-language-control>
+      <span aria-hidden="true">🌐</span>
+      <label for="v-language">Idioma</label>
+      <select id="v-language" aria-label="Idioma / Language"><option value="es">Español</option><option value="en">English</option></select>
+    </div>
     <header class="bg-white sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-2">
                 <div class="flex-shrink-0 flex items-center">
-                    <button id="mobile-menu-btn" class="md:hidden mr-4 text-gray-900 hover:text-v-orange transition">
+                    <button id="mobile-menu-btn" aria-label="Abrir menú" class="md:hidden mr-4 text-gray-900 hover:text-v-orange transition">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     </button>
                     <a href="index.html">
@@ -77,7 +89,7 @@
                 <nav class="hidden md:flex space-x-8">
                     <a href="index.html" class="text-gray-900 font-semibold hover:text-v-orange transition">Inicio</a>
                     <a href="#catalogo" class="text-gray-700 hover:text-v-orange transition">Catálogo</a>
-                    <a href="#" class="text-gray-700 hover:text-v-orange transition">Redes Sociales</a>
+                    <a href="https://www.instagram.com/vertices3d_tx/" class="text-gray-700 hover:text-v-orange transition">Redes Sociales</a>
                     <a href="#contacto" class="text-gray-700 hover:text-v-orange transition">Contacto</a>
                 </nav>
                 <button type="button" data-open-cart class="cart-trigger" aria-label="Abrir carrito" aria-haspopup="dialog">
@@ -94,14 +106,14 @@
     <div id="mobile-menu" class="fixed inset-y-0 left-0 w-64 bg-v-darker shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-[60] flex flex-col">
         <div class="p-4 border-b border-gray-800 flex justify-between items-center">
             <img src="vertice-logo-transparente.png" alt="Vértice 3D" class="h-10 w-auto object-contain">
-            <button id="close-menu-btn" class="text-gray-400 hover:text-v-orange transition">
+            <button id="close-menu-btn" aria-label="Cerrar menú" class="text-gray-400 hover:text-v-orange transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
         </div>
         <nav class="flex flex-col p-4 space-y-5">
             <a href="index.html" class="text-white font-bold hover:text-v-orange text-lg">Inicio</a>
             <a href="#catalogo" onclick="toggleMenu()" class="text-white font-bold hover:text-v-orange text-lg">Catálogo</a>
-            <a href="#" class="text-white font-bold hover:text-v-orange text-lg">Redes Sociales</a>
+            <a href="https://www.instagram.com/vertices3d_tx/" class="text-white font-bold hover:text-v-orange text-lg">Redes Sociales</a>
             <a href="#contacto" onclick="toggleMenu()" class="text-white font-bold hover:text-v-orange text-lg">Contacto</a>
         </nav>
     </div>
@@ -119,7 +131,7 @@
                     TRANSFORMANDO <br><span class="text-v-orange">IDEAS EN REALIDAD</span>
                 </h1>
                 <p class="text-xs sm:text-sm text-gray-300 mb-0 border-l-2 md:border-l-4 border-v-orange pl-3 md:pl-4 font-light leading-relaxed">
-                    Impresión 3D Funcional y Creativa a Medida. Desde soportes para gimnasio hasta prototipos especializados. Tú lo imaginas, nosotros lo fabricamos capa por capa.
+                    Piezas funcionales, accesorios personalizados y prototipos fabricados en Austin, Texas. Explora nuestro catálogo o cuéntanos qué necesitas para tu próximo proyecto.
                 </p>            </div>
             <div class="w-full md:w-2/5 flex justify-center">
                 <div class="relative rounded-xl overflow-hidden shadow-lg border-2 border-v-orange/30 group w-full">
@@ -132,7 +144,7 @@
     <!-- Catálogo -->
     <div id="catalogo" class="bg-white border-b border-gray-200 pt-6 md:pt-8 pb-4">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900">Nuestro Catálogo</h2>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900">Diseños listos para tu día a día</h2>
         </div>
     </div>
 
@@ -143,11 +155,11 @@
             <a href="airholder.html" class="product-card bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden flex flex-col group cursor-pointer block">
                 <div class="h-48 md:h-56 overflow-hidden bg-gray-100 relative">
                     <img src="34d051f3-77c0-4d22-94e9-48a67f30c8b5.jpg" alt="Airholder azul sujeto magnéticamente a una máquina de gimnasio con soporte MagSafe" class="w-full h-full object-contain transition-transform duration-500">
-                    <div class="absolute top-2 left-2 bg-v-dark text-white text-[10px] font-bold px-2 py-1 rounded uppercase">Más Vendido</div>
+                    <div class="absolute top-2 left-2 bg-v-dark text-white text-[10px] font-bold px-2 py-1 rounded uppercase">Destacado</div>
                 </div>
                 <div class="p-4 flex flex-col flex-grow">
                     <h3 class="text-base md:text-md font-bold text-gray-900 group-hover:text-v-orange transition">Airholder</h3>
-                    <p class="text-xs text-gray-500 mt-1 mb-3 flex-grow leading-relaxed">Porta termo magnético con soporte MagSafe para máquinas de gimnasio.</p>
+                    <p class="text-xs text-gray-500 mt-1 mb-3 flex-grow leading-relaxed">Mantén tu termo, teléfono y llaves a mano mientras entrenas. Soporte magnético con anclaje MagSafe.</p>
                     <span class="text-lg font-bold text-v-orange">$35.00</span>
                 </div>
             </a>

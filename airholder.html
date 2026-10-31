@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Airholder: soporte magnético para termo, teléfono y llaves. Elige tu color y personaliza tu accesorio de gimnasio en Vértice 3D.">
     <title>Airholder | Vértice 3D</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -52,11 +53,22 @@
             .product-details > .mt-10 { margin-top: 24px; padding-top: 16px; }
             .product-details ul { font-size: 13px; line-height: 1.5; }
         }
+    
+        .v-language-bar{display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:4px 16px;background:#f3f4f6;border-bottom:1px solid #e5e7eb;color:#242424;font-size:12px}
+        .v-language-bar select{min-height:36px;padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;background:white;font-size:13px}
+        header nav{white-space:nowrap}
+        @media(min-width:768px){header nav{gap:20px!important;margin:0!important}header nav>a{margin:0!important}}
     </style>
-    <script src="cart.js" defer></script>
+    <script src="v-language.js?v=1" defer></script>
+    <script src="cart.js?v=2" defer></script>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
 
+    <div class="v-language-bar" data-language-control>
+      <span aria-hidden="true">🌐</span>
+      <label for="v-language">Idioma</label>
+      <select id="v-language" aria-label="Idioma / Language"><option value="es">Español</option><option value="en">English</option></select>
+    </div>
     <header class="bg-white sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-2">
@@ -130,20 +142,20 @@
                 <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-2">Airholder</h1>
                 <p class="text-2xl font-bold text-v-orange mb-6">$35.00</p>
                 <p class="text-sm md:text-base text-gray-600 mb-8 leading-relaxed">
-                    Soporte magnético premium impreso en 3D (15x8 cm). Diseñado para fijar tu termo a las máquinas de gimnasio, mantener tu teléfono accesible con su anclaje MagSafe y sujetar tus llaves en un solo lugar.
+                    Organiza lo que necesitas durante el entrenamiento. Airholder se fija a superficies metálicas compatibles para mantener tu termo, teléfono y llaves al alcance. Fabricado mediante impresión 3D, con soporte MagSafe y dimensiones de 15 × 8 cm.
                 </p>
 
                 <!-- Campo de Personalización -->
                 <div class="mb-8">
-                    <label for="custom-name" class="block text-sm font-bold text-gray-900 uppercase mb-2">Personalización (Texto en relieve)</label>
+                    <label for="custom-name" class="block text-sm font-bold text-gray-900 uppercase mb-2">Hazlo tuyo: texto en relieve</label>
                     <input type="text" id="custom-name" maxlength="80" placeholder="Ej. Emilio, Vértice3D..." class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-v-orange focus:border-transparent transition text-sm">
-                    <p class="text-xs text-gray-500 mt-2">Escribe el nombre o frase corta que deseas agregar a tu Airholder (Opcional).</p>
+                    <p class="text-xs text-gray-500 mt-2">Agrega un nombre o una frase corta. La personalización es opcional.</p>
                 </div>
 
                 <!-- Selección de Colores -->
                 <div class="mb-10">
-                    <h3 class="text-sm font-bold text-gray-900 uppercase mb-3">Color disponible: <span id="color-name" class="font-normal text-gray-600">Selecciona un color</span></h3>
-                    <p class="text-sm text-gray-600">Elige una de las fotos de colores debajo de la imagen principal para ver tu Airholder.</p>
+                    <h3 class="text-sm font-bold text-gray-900 uppercase mb-3">Color seleccionado: <span id="color-name" class="font-normal text-gray-600">Selecciona un color</span></h3>
+                    <p class="text-sm text-gray-600">Selecciona una miniatura para ver el producto en ese color antes de añadirlo al carrito.</p>
                 </div>
 
                 <button onclick="addCustomToCart()" class="bg-v-orange text-white py-4 px-8 rounded-md font-bold text-lg hover:bg-orange-600 transition shadow-xl w-full flex justify-center items-center">
@@ -152,11 +164,11 @@
                 </button>
                 
                 <div class="mt-10 border-t border-gray-100 pt-6">
-                    <h4 class="text-sm font-bold text-gray-900 uppercase mb-4">Especificaciones de Fabricación</h4>
+                    <h4 class="text-sm font-bold text-gray-900 uppercase mb-4">Detalles del producto</h4>
                     <ul class="space-y-3 text-sm text-gray-600">
-                        <li class="flex items-start"><svg class="w-5 h-5 mr-2 text-v-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span>Sistema de anclaje de 3 potentes imanes ocultos bajo un resistente laminado de goma azul.</span></li>
-                        <li class="flex items-start"><svg class="w-5 h-5 mr-2 text-v-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span>Unión sellada con adhesivo industrial 3M 300LSE para garantizar máxima fijación sin deslizamientos en superficies metálicas.</span></li>
-                        <li class="flex items-start"><svg class="w-5 h-5 mr-2 text-v-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span>Clip inferior especialmente diseñado para anclar llaves durante el entrenamiento.</span></li>
+                        <li class="flex items-start"><svg class="w-5 h-5 mr-2 text-v-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span>Anclaje con tres imanes, cubiertos por una lámina de goma azul.</span></li>
+                        <li class="flex items-start"><svg class="w-5 h-5 mr-2 text-v-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span>Ensamble con adhesivo 3M 300LSE. La fijación depende de la superficie y de las condiciones de uso.</span></li>
+                        <li class="flex items-start"><svg class="w-5 h-5 mr-2 text-v-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span>Clip inferior para mantener las llaves junto a tus accesorios.</span></li>
                     </ul>
                 </div>
             </div>
@@ -175,8 +187,8 @@
         function selectVariant(button) {
             const image = document.getElementById('main-image');
             image.src = button.dataset.image;
-            image.alt = button.dataset.color ? 'Airholder en color ' + button.dataset.color : 'Airholder azul con anclaje magnético y soporte MagSafe en el gimnasio';
-            document.getElementById('color-name').textContent = button.dataset.color || 'Selecciona un color';
+            image.alt = window.VerticeLanguage.t(button.dataset.color ? 'Airholder en color ' + button.dataset.color : 'Airholder azul sujeto magnéticamente a una máquina de gimnasio con soporte MagSafe');
+            window.VerticeLanguage.setText(document.getElementById('color-name'), button.dataset.color || 'Selecciona un color');
             document.querySelectorAll('.variant-btn').forEach(option => {
                 const selected = option === button;
                 option.setAttribute('aria-pressed', String(selected));
@@ -185,10 +197,16 @@
             });
         }
 
+        window.addEventListener('vertice:language', () => {
+            const selected = document.querySelector('.variant-btn[aria-pressed="true"]');
+            if (selected) selectVariant(selected);
+        });
+
         function addCustomToCart() {
-            const color = document.getElementById('color-name').textContent.trim();
+            const selected = document.querySelector('.variant-btn[aria-pressed="true"]');
+            const color = selected ? selected.dataset.color : '';
             if (!window.VerticeCart.add(color, document.getElementById('custom-name').value)) {
-                alert('Selecciona el color que deseas en las fotos del producto.');
+                alert(window.VerticeLanguage.t('Selecciona el color que deseas en las fotos del producto.'));
             }
         }
     </script>

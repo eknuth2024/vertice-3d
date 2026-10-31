@@ -1,7 +1,8 @@
 (() => {
 'use strict';
 const KEY = 'vertice-cart-v1';
-const money = value => new Intl.NumberFormat('es-US', {style:'currency', currency:'USD'}).format(value);
+const t = text => window.VerticeLanguage ? window.VerticeLanguage.t(text) : text;
+const money = value => new Intl.NumberFormat(window.VerticeLanguage && window.VerticeLanguage.language === 'en' ? 'en-US' : 'es-US', {style:'currency', currency:'USD'}).format(value);
 const read = () => {
     try {
         const data = JSON.parse(localStorage.getItem(KEY) || '[]');
@@ -12,7 +13,7 @@ let items = read();
 function render() {
     const count = items.reduce((sum, item) => sum + item.quantity, 0);
     document.querySelectorAll('[data-cart-count]').forEach(el => el.textContent = String(count));
-    document.querySelectorAll('[data-open-cart]').forEach(el => el.setAttribute('aria-label', 'Abrir carrito: ' + count + ' artículos'));
+    document.querySelectorAll('[data-open-cart]').forEach(el => el.setAttribute('aria-label', t('Abrir carrito: ') + count + t(' artículos')));
     const list = document.getElementById('cart-items');
     if (!list) return;
     list.replaceChildren();
@@ -23,12 +24,12 @@ function render() {
         const image = document.createElement('img');
         const images = {'Negro':'negro','Amarillo':'amarillo','Plateado':'plateado','Rojo':'rojo','Rosado':'rosado','Verde militar':'verde-militar','Verde':'verde'};
         image.src = 'airholder-' + images[item.color] + '.webp';
-        image.alt = 'Airholder ' + item.color;
+        image.alt = 'Airholder ' + t(item.color);
         const info = document.createElement('div');
         const title = document.createElement('strong');
-        title.textContent = 'Airholder · ' + item.color;
+        title.textContent = 'Airholder · ' + t(item.color);
         const custom = document.createElement('p');
-        custom.textContent = item.custom ? 'Texto: ' + item.custom : 'Sin personalización';
+        custom.textContent = item.custom ? t('Texto: ') + item.custom : t('Sin personalización');
         const price = document.createElement('p');
         price.textContent = money(35 * item.quantity);
         const controls = document.createElement('div');
@@ -38,12 +39,13 @@ function render() {
             el.type = 'button'; el.textContent = text; el.setAttribute('aria-label', label);
             el.addEventListener('click', action); return el;
         };
-        controls.append(button('Reducir cantidad de Airholder ' + item.color, '−', () => change(index,-1)));
+        controls.append(button(t('Reducir cantidad de Airholder ') + t(item.color), '−', () => change(index,-1)));
         const qty = document.createElement('span'); qty.textContent = String(item.quantity);
-        controls.append(qty, button('Aumentar cantidad de Airholder ' + item.color, '+', () => change(index,1)), button('Eliminar Airholder ' + item.color, 'Eliminar', () => remove(index)));
+        controls.append(qty, button(t('Aumentar cantidad de Airholder ') + t(item.color), '+', () => change(index,1)), button(t('Eliminar Airholder ') + t(item.color), t('Eliminar'), () => remove(index)));
         info.append(title, custom, price, controls); row.append(image, info); list.append(row);
     });
     document.getElementById('cart-total').textContent = money(items.reduce((sum,item) => sum + 35 * item.quantity,0));
+    if(window.VerticeLanguage) window.VerticeLanguage.apply(document.getElementById('cart-dialog'));
 }
 function save() {
     let stored = true;
@@ -94,6 +96,7 @@ function init() {
     dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)close();}});
     document.querySelectorAll('[data-open-cart]').forEach(el=>el.addEventListener('click',open));
     window.addEventListener('storage',event=>{if(event.key===KEY||event.key===null){items=read();render();}});
+    window.addEventListener('vertice:language',render);
     render();
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init);
