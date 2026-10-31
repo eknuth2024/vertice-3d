@@ -1,22 +1,10 @@
 function calculatePrint(v) {
-  const required = ['spoolWeight','years','dailyHours','quantity'];
-  for (const [key,value] of Object.entries(v)) {
-    if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) throw new Error('invalid');
-  }
-  if(required.some(key=>v[key]<=0)||!Number.isInteger(v.quantity)||v.discount>100||v.dailyHours>24||v.minutes>=60) throw new Error('invalid');
-  const hours = v.hours + v.minutes/60;
-  const material = v.grams / v.spoolWeight * v.spoolPrice;
-  const markup = material * v.markup/100;
-  const energy = hours * v.watts/1000 * v.kwh;
-  const labor = v.prep/60*v.prepRate + v.finish/60*v.finishRate;
-  const machine = hours * v.machinePrice*(1+v.repair/100)/(v.years*365*v.dailyHours);
-  const unit = material+markup+energy+labor+machine+v.extras;
-  const base = unit*v.quantity;
-  const discount = base*v.discount/100;
-  const rush = (base-discount)*v.rush/100;
-  const subtotal = base-discount+rush;
-  const tax = subtotal*v.tax/100;
-  return {hours,material,markup,energy,labor,machine,extras:v.extras,unit,base,discount,rush,subtotal,tax,total:subtotal+tax,quantity:v.quantity};
+for(const value of Object.values(v))if(typeof value!=='number'||!Number.isFinite(value)||value<0)throw Error('invalid');
+if(v.spoolWeight<=0||v.quantity<1||!Number.isInteger(v.quantity)||v.discount>100||v.minutes>=60||v.failureRate>99)throw Error('invalid');
+const hours=v.hours+v.minutes/60,material=v.grams/v.spoolWeight*v.spoolPrice,markup=material*v.markup/100,energy=hours*v.watts/1000*v.kwh,labor=v.prep/60*v.prepRate+v.finish/60*v.finishRate,machine=hours*v.reserveRate;
+const failure=(material+energy+machine)*v.failureRate/100,unit=material+energy+labor+machine+v.extras+failure,production=unit*v.quantity,profit=unit*v.profitRate/100,base=(unit+markup+profit)*v.quantity,discount=base*v.discount/100;
+const minimumTopup=unit>0?Math.max(0,v.minimum-(base-discount)):0,rush=(base-discount+minimumTopup)*v.rush/100,subtotal=base-discount+minimumTopup+rush,tax=subtotal*v.tax/100;
+return {hours,material,markup,energy,labor,machine,failure,extras:v.extras,unit,production,profit,base,discount,minimumTopup,rush,subtotal,tax,total:subtotal+tax,quantity:v.quantity};
 }
 function parseGcode(text) {
   const result={};
@@ -42,7 +30,7 @@ const t=text=>window.VerticeLanguage ? window.VerticeLanguage.t(text):text;
 const money=value=>new Intl.NumberFormat(document.documentElement.lang==='en'?'en-US':'es-US',{style:'currency',currency:'USD'}).format(value);
 let current=null;
 function number(id){const field=document.getElementById(id);return field.value===''?NaN:Number(field.value);}
-const keys=['hours','minutes','grams','spoolPrice','spoolWeight','markup','watts','kwh','prep','prepRate','finish','finishRate','machinePrice','years','dailyHours','repair','quantity','discount','tax'];
+const keys=['hours','minutes','grams','spoolPrice','spoolWeight','markup','watts','kwh','prep','prepRate','finish','finishRate','reserveRate','failureRate','profitRate','minimum','quantity','discount','tax'];
 function values(){
   const v=Object.fromEntries(keys.map(key=>[key,number('calc-'+key)]));
   v.rush=document.getElementById('calc-urgent').checked?number('calc-rush'):0;
@@ -65,7 +53,7 @@ function update(){
 }
 function summary(){
  const title=document.getElementById('calc-job').value.trim()||t('Proyecto de impresión 3D');
- const rows=[['Filamento',current.material],['Recargo de material',current.markup],['Electricidad',current.energy],['Mano de obra',current.labor],['Máquina y mantenimiento',current.machine],['Otros costos',current.extras],['Precio por pieza',current.unit],['Total antes de ajustes',current.base],['Descuento',-current.discount],['Urgencia',current.rush],['Subtotal',current.subtotal],['Impuesto',current.tax],['Precio total',current.total]];
+ const rows=[['Filamento',current.material],['Recargo de material',current.markup],['Electricidad',current.energy],['Mano de obra',current.labor],['Máquina y mantenimiento',current.machine],['Otros costos',current.extras],['Costo de producción por pieza',current.unit],['Costo de producción del pedido',current.production],['Reserva por fallos (por pieza)',current.failure],['Recargo de ganancia (por pieza)',current.profit],['Total antes de ajustes',current.base],['Descuento',-current.discount],['Ajuste por mínimo de pedido',current.minimumTopup],['Urgencia',current.rush],['Subtotal',current.subtotal],['Impuesto',current.tax],['Precio total',current.total]];
  return ['Vértice 3D · '+t('Estimación de impresión 3D'),title,
  t('Cliente')+': '+document.getElementById('calc-client').value.trim(),
  t('Referencia')+': '+document.getElementById('calc-reference').value.trim(),
