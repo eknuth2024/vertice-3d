@@ -114,3 +114,35 @@ document.getElementById('calc-file').addEventListener('change',async event=>{
 });
 window.addEventListener('vertice:language',update);update();
 })();
+
+(() => {
+ const t=text=>window.VerticeLanguage.t(text);
+ const get=id=>document.getElementById('request-'+id);
+ const value=id=>get(id).value.trim();
+ const status=message=>window.VerticeLanguage.setText(get('status'),message);
+ document.getElementById('print-request-form').addEventListener('submit',event=>{
+   event.preventDefault();if(!event.currentTarget.reportValidity())return;
+   const file=get('file').files[0],link=value('link');
+   if(!value('name')||!value('contact')||!value('size')||!value('use')){status('Completa los campos obligatorios.');return;}
+   if(!file&&!link){status('Incluye un archivo del modelo o un enlace.');return;}
+   if(file&&!/\.(stl|step|stp|3mf|obj)$/i.test(file.name)){status('Usa un archivo STL, STEP, STP, 3MF u OBJ.');return;}
+   if(link){try{const url=new URL(link);if(!['https:','http:'].includes(url.protocol))throw Error();}catch{status('Revisa el enlace al modelo. Debe comenzar con https:// o http://.');return;}}
+   const rows=[
+    ['Tu nombre',value('name')],['Correo o usuario de Instagram para responderte',value('contact')],
+    ['Archivo del modelo (opcional)',file?file.name:t('No indicado')],['Enlace al modelo (opcional)',link||t('No indicado')],
+    ['Cantidad de piezas',value('quantity')],['Medidas deseadas (largo × ancho × alto)',value('size')+' '+value('units')],
+    ['Material preferido',value('material')||t('Necesito asesoría')],['Color preferido (opcional)',value('color')||t('No indicado')],
+    ['Fecha deseada (opcional)',value('date')||t('No indicado')],['¿Para qué se usará la pieza?',value('use')],
+    ['Acabado, resistencia u otros requisitos (opcional)',value('notes')||t('No indicado')]
+   ];
+   get('summary').value=t('Solicitud de impresión 3D')+' · Vértice 3D\n\n'+rows.map(([label,data])=>t(label)+': '+data).join('\n');
+   get('result').hidden=false;
+   status('Solicitud preparada. Cópiala y envíala por Instagram junto con tu archivo o enlace.');
+ });
+ get('copy').addEventListener('click',async()=>{
+  try{await navigator.clipboard.writeText(get('summary').value);status('Solicitud copiada.');}
+  catch{get('summary').focus();get('summary').select();status('Selecciona y copia el resumen manualmente.');}
+ });
+ document.getElementById('print-request-form').addEventListener('input',()=>{get('result').hidden=true;status('');});
+ window.addEventListener('vertice:language',()=>{get('result').hidden=true;status('');});
+})();
