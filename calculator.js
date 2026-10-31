@@ -134,3 +134,22 @@ window.addEventListener('vertice:language',update);update();
  document.getElementById('print-request-form').addEventListener('input',()=>{get('result').hidden=true;status('');});
  window.addEventListener('vertice:language',()=>{get('result').hidden=true;status('');});
 })();
+
+(() => {
+ function refreshFileNames() {
+  document.querySelectorAll('[data-file-picker]').forEach(button=>{
+   const input=document.getElementById(button.dataset.filePicker);
+   const label=document.getElementById(input.id+'-name');
+   if(input.files.length) label.textContent=input.files[0].name;
+   else window.VerticeLanguage.setText(label,'Ningún archivo seleccionado');
+  });
+ }
+ document.querySelectorAll('[data-file-picker]').forEach(button=>{
+  const input=document.getElementById(button.dataset.filePicker);
+  button.addEventListener('click',()=>input.click());
+  input.addEventListener('change',refreshFileNames);
+ });
+ document.getElementById('print-form').addEventListener('reset',()=>queueMicrotask(refreshFileNames));
+ window.addEventListener('vertice:language',refreshFileNames);
+ refreshFileNames();
+})();
