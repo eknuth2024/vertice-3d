@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calcula material, electricidad, mano de obra y mantenimiento para estimar tus impresiones 3D en USD.">
+    <title>Calculadora 3D | Vértice 3D</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'v-darker': '#121212',
+                        'v-dark': '#2D2D2D',
+                        'v-orange': '#FF5A00',
+                        'v-gray': '#F5F5F5'
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .product-card:hover img { transform: scale(1.05); }
+        html { scroll-behavior: smooth; }
+    
+        /* Compact layout for phones; desktop sizes stay unchanged. */
+        @media (max-width: 767px) {
+            header .max-w-7xl { padding-left: 12px; padding-right: 12px; }
+            header img { height: 68px; max-width: 230px; }
+            header a { font-size: 13px; }
+            main { padding: 16px 12px !important; }
+            footer { padding-top: 20px !important; padding-bottom: 20px !important; }
+        }
+
+        @media (max-width: 767px) {
+            #mobile-menu-btn, #close-menu-btn { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+            #mobile-menu-btn { margin-right: 8px; }
+            #mobile-menu-btn svg { width: 24px; height: 24px; }
+            #mobile-menu nav { gap: 4px; }
+            #mobile-menu nav a { font-size: 14px; min-height: 44px; display: flex; align-items: center; }
+            #hero > .relative { padding: 16px 12px; gap: 12px; }
+            #hero h1 { font-size: 21px; line-height: 1.15; }
+            #hero p { font-size: 12px; line-height: 1.5; }
+            #hero img[alt="Taller Vértice 3D"] { height: 80px; }
+            #catalogo { padding-top: 18px; padding-bottom: 12px; scroll-margin-top: 64px; }
+            #catalogo h2 { font-size: 19px; line-height: 1.3; }
+            main > .grid { gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            main .product-card { min-width: 0; }
+            main .product-card h3 { overflow-wrap: anywhere; }
+            .product-card > .h-48 { height: 150px; }
+            .product-card > .p-4 { padding: 10px; }
+            .product-card h3 { font-size: 14px; }
+            .product-card .text-lg { font-size: 16px; }
+            .product-card.min-h-\\[300px\\] { min-height: 120px; padding: 16px; }
+            footer img { height: 36px; }
+            footer .mb-6 { margin-bottom: 12px; }
+        }
+    
+        .v-language-bar{display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:4px 16px;background:#f3f4f6;border-bottom:1px solid #e5e7eb;color:#242424;font-size:12px}
+        .v-language-bar select{min-height:36px;padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;background:white;font-size:13px}
+        header nav{white-space:nowrap}
+        @media(min-width:768px){header nav{gap:20px!important;margin:0!important}header nav>a{margin:0!important}}
+    
+        .v-language-bar{justify-content:center;gap:8px;padding:4px 16px;background:#FF5A00;border-bottom:1px solid #e65100;color:#fff;font-size:12px;font-weight:600}
+        .v-language-bar select{min-width:0;min-height:36px;padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;background:#fff;color:#242424;font-size:13px;font-weight:400;box-shadow:none;cursor:pointer}
+        .v-language-bar select:focus-visible{outline:2px solid #242424;outline-offset:2px}
+    @media(min-width:768px) and (max-width:1100px){header nav{gap:10px!important;font-size:12px}header img{max-width:190px}}
+    
+.calculator-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start;margin-top:24px}
+.calc-panel{min-width:0;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px;margin:0 0 18px}
+.calc-panel legend{font-size:16px;font-weight:700;padding:0 6px}
+.calc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.calc-field{min-width:0}.calc-field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+.calc-field input,.calc-field select,.calc-field textarea,.extra-row input{width:100%;min-width:0;min-height:44px;border:1px solid #d1d5db;border-radius:6px;padding:9px;background:#fff;font-size:16px;color:#242424}
+.calc-field input:focus-visible,.calc-field select:focus-visible,.calc-field textarea:focus-visible,.extra-row input:focus-visible{outline:2px solid #ff5a00;outline-offset:2px}
+.calc-field input:disabled{background:#f3f4f6;color:#6b7280}.calc-wide{grid-column:1/-1}
+.calc-help{font-size:12px;color:#6b7280;line-height:1.6;margin-top:8px}
+.calc-checkbox{display:flex;gap:8px;align-items:center;font-size:14px;min-height:44px}.calc-checkbox input{width:20px;height:20px}
+.calc-summary{position:sticky;top:130px;background:#fff;border:1px solid #fed7aa;border-top:4px solid #ff5a00;border-radius:12px;padding:20px}
+.calc-total{font-size:36px;font-weight:800;color:#e04c00;overflow-wrap:anywhere}.calc-result{display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #f3f4f6;padding:9px 0;font-size:13px}.calc-result dd{font-weight:600;white-space:nowrap}
+.calc-primary,.calc-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border-radius:7px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer}
+.calc-primary{background:#ff5a00;color:white;width:100%;margin-top:14px}.calc-secondary{background:#f3f4f6;color:#242424;margin-top:10px}.calc-summary .calc-secondary{width:100%}
+.calc-primary:disabled,.calc-secondary:disabled{opacity:.45;cursor:not-allowed}.calc-error{font-size:13px;color:#b91c1c;margin-top:14px}
+.extra-row{display:grid;grid-template-columns:minmax(0,1fr) 105px 44px;gap:8px;margin-top:10px}.extra-row button{min-height:44px;border:1px solid #ddd;border-radius:6px}
+#calc-print-summary{display:none}
+@media(max-width:900px){.calculator-layout{grid-template-columns:minmax(0,1fr)}.calc-summary{position:static}.calc-total{font-size:30px}}
+@media(max-width:479px){.calc-grid{grid-template-columns:minmax(0,1fr)}.calc-panel{padding:14px}.extra-row{grid-template-columns:minmax(0,1fr) 85px 44px}}
+@media print{body>*{display:none!important}.calculator-page{display:block!important}.calculator-page>*{display:none!important}#calc-print-summary{display:block!important;white-space:pre-wrap;overflow-wrap:anywhere;font:12pt/1.6 Arial;color:#000;background:#fff}}
+
+</style>
+    <script src="v-language.js?v=calculator-4" defer></script>
+    <script src="cart.js?v=2" defer></script>
+<script src="calculator.js?v=1" defer></script>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
+
+    <!-- Navegación -->
+    <div class="v-language-bar" data-language-control>
+      <span aria-hidden="true">🌐</span>
+      <label for="v-language">Idioma</label>
+      <select id="v-language" aria-label="Idioma / Language"><option value="es">Español</option><option value="en">English</option></select>
+    </div>
+    <header class="bg-white sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-2">
+                <div class="flex-shrink-0 flex items-center">
+                    <button id="mobile-menu-btn" aria-label="Abrir menú" class="md:hidden mr-4 text-gray-900 hover:text-v-orange transition">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                    <a href="index.html">
+                        <img src="vertice-logo-transparente.png" alt="Vértice 3D" class="h-20 md:h-24 w-auto max-w-[260px] object-contain">
+                    </a>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-900 font-semibold hover:text-v-orange transition">Inicio</a>
+                    <a href="index.html#catalogo" class="text-gray-700 hover:text-v-orange transition">Catálogo</a>                    <a href="calculator.html" class="text-gray-700 hover:text-v-orange transition">Calculadora de impresión</a>
+                    <a href="#contacto" class="text-gray-700 hover:text-v-orange transition">Contacto</a>
+                </nav>
+                <button type="button" data-open-cart class="cart-trigger" aria-label="Abrir carrito" aria-haspopup="dialog">
+                    <svg aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3h2l2.4 12h11l3-9H6M9 20h.01M18 20h.01"/></svg>
+                    <span data-cart-count class="cart-badge">0</span>
+                </button>
+            </div>
+        </div>
+        <div aria-hidden="true" class="h-1 w-full bg-gradient-to-r from-[#FF5A00] via-orange-600 to-black"></div>
+    </header>
+
+    <!-- Menú Móvil -->
+    <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[55] hidden opacity-0 transition-opacity duration-300"></div>
+    <div id="mobile-menu" class="fixed inset-y-0 left-0 w-64 bg-v-darker shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-[60] flex flex-col">
+        <div class="p-4 border-b border-gray-800 flex justify-between items-center">
+            <img src="vertice-logo-transparente.png" alt="Vértice 3D" class="h-10 w-auto object-contain">
+            <button id="close-menu-btn" aria-label="Cerrar menú" class="text-gray-400 hover:text-v-orange transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <nav class="flex flex-col p-4 space-y-5">
+            <a href="index.html" class="text-white font-bold hover:text-v-orange text-lg">Inicio</a>
+            <a href="index.html#catalogo" onclick="toggleMenu()" class="text-white font-bold hover:text-v-orange text-lg">Catálogo</a>            <a href="calculator.html" class="text-white font-bold text-lg hover:text-v-orange transition">Calculadora de impresión</a>
+            <a href="#contacto" onclick="toggleMenu()" class="text-white font-bold hover:text-v-orange text-lg">Contacto</a>
+        </nav>
+    </div>
+
+<main class="calculator-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-grow">
+  <h1 class="text-2xl md:text-3xl font-black">Calculadora de impresión 3D</h1>
+  <p class="mt-2 text-sm text-gray-600">Calcula tus costos y prepara una estimación en dólares. Ajusta cada valor a tu proyecto.</p>
+  <p class="calc-help mt-2">Los valores iniciales son ejemplos editables, no tarifas de Vértice 3D. El tiempo, peso, mano de obra y gastos se indican por pieza.</p>
+  <div class="calculator-layout">
+    <form id="print-form"><fieldset class="calc-panel"><legend>Datos de impresión</legend><div class="calc-grid"><div class="calc-field"><label for="calc-job">Nombre del proyecto</label><input id="calc-job" type="text" maxlength="150"></div><div class="calc-field"><label for="calc-material">Material</label><select id="calc-material"><option>PLA</option><option>PETG</option><option>TPU</option><option>ABS</option><option>ASA</option><option>Otro</option></select></div><div class="calc-field"><label for="calc-hours">Horas por pieza</label><input id="calc-hours" type="number" value="0" min="0" step="1"  required></div><div class="calc-field"><label for="calc-minutes">Minutos por pieza</label><input id="calc-minutes" type="number" value="0" min="0" step="1" max="59" required></div><div class="calc-field"><label for="calc-grams">Peso por pieza (g)</label><input id="calc-grams" type="number" value="0" min="0" step="0.01"  required></div><div class="calc-field"><label for="calc-file">Importar G-code (opcional)</label><input id="calc-file" type="file" accept=".gcode"><p class="calc-help">Solo archivos .gcode de texto, hasta 25 MB. Se leen en tu navegador; no se suben. No admite .3mf ni G-code binario.</p><p id="gcode-status" role="status"></p></div></div></fieldset><fieldset class="calc-panel"><legend>Filamento</legend><div class="calc-grid"><div class="calc-field"><label for="calc-spoolPrice">Precio del rollo (USD)</label><input id="calc-spoolPrice" type="number" value="20" min="0" step="0.01"  required></div><div class="calc-field"><label for="calc-spoolWeight">Peso del rollo (g)</label><input id="calc-spoolWeight" type="number" value="1000" min="0.01" step="0.01"  required></div><div class="calc-field"><label for="calc-markup">Recargo sobre material (%)</label><input id="calc-markup" type="number" value="0" min="0" step="0.01"  required></div></div></fieldset><fieldset class="calc-panel"><legend>Electricidad</legend><div class="calc-grid"><div class="calc-field"><label for="calc-printer">Impresora (opcional)</label><input id="calc-printer" type="text" maxlength="150"></div><div class="calc-field"><label for="calc-watts">Consumo promedio (W)</label><input id="calc-watts" type="number" value="0" min="0" step="0.01"  required></div><div class="calc-field"><label for="calc-kwh">Precio de energía (USD/kWh)</label><input id="calc-kwh" type="number" value="0" min="0" step="0.001"  required></div></div></fieldset><fieldset class="calc-panel"><legend>Mano de obra</legend><div class="calc-grid"><div class="calc-field"><label for="calc-prep">Preparación por pieza (min)</label><input id="calc-prep" type="number" value="0" min="0" step="0.01"  required></div><div class="calc-field"><label for="calc-prepRate">Tarifa de preparación (USD/h)</label><input id="calc-prepRate" type="number" value="0" min="0" step="0.01"  required></div><div class="calc-field"><label for="calc-finish">Acabado por pieza (min)</label><input id="calc-finish" type="number" value="0" min="0" step="0.01"  required></div><div class="calc-field"><label for="calc-finishRate">Tarifa de acabado (USD/h)</label><input id="calc-finishRate" type="number" value="0" min="0" step="0.01"  required></div></div></fieldset><fieldset class="calc-panel"><legend>Máquina y mantenimiento</legend><div class="calc-grid"><div class="calc-field"><label for="calc-machinePrice">Precio de la impresora (USD)</label><input id="calc-machinePrice" type="number" value="0" min="0" step="0.01"  required></div><div class="calc-field"><label for="calc-years">Plazo de amortización (años)</label><input id="calc-years" type="number" value="3" min="0.1" step="0.1"  required></div><div class="calc-field"><label for="calc-dailyHours">Uso promedio (horas al día)</label><input id="calc-dailyHours" type="number" value="8" min="0.1" step="0.1" max="24" required></div><div class="calc-field"><label for="calc-repair">Reserva de mantenimiento (% del precio)</label><input id="calc-repair" type="number" value="0" min="0" step="0.01"  required></div></div></fieldset><fieldset class="calc-panel"><legend>Otros costos</legend><p class="calc-help">Agrega empaque, envío, imanes, tornillería u otros gastos por pieza.</p><div id="calc-extras"></div><button type="button" id="calc-add-extra" class="calc-secondary">Agregar gasto</button></fieldset><fieldset class="calc-panel"><legend>Cantidad y ajustes</legend><div class="calc-grid"><div class="calc-field"><label for="calc-quantity">Cantidad de piezas</label><input id="calc-quantity" type="number" value="1" min="1" step="1"  required></div><div class="calc-field"><label for="calc-discount">Descuento (%)</label><input id="calc-discount" type="number" value="0" min="0" step="0.01" max="100" required></div><label class="calc-checkbox"><input id="calc-urgent" type="checkbox"> <span>Pedido urgente</span></label><div class="calc-field"><label for="calc-rush">Recargo por urgencia (%)</label><input id="calc-rush" disabled type="number" value="0" min="0" step="0.01"  required></div><div class="calc-field"><label for="calc-tax">Impuesto aplicable (%)</label><input id="calc-tax" type="number" value="0" min="0" step="0.01"  required></div></div></fieldset><fieldset class="calc-panel"><legend>Datos para el resumen</legend><div class="calc-grid"><div class="calc-field"><label for="calc-client">Cliente</label><input id="calc-client" type="text" maxlength="150"></div><div class="calc-field"><label for="calc-reference">Referencia</label><input id="calc-reference" type="text" maxlength="150"></div><div class="calc-field calc-wide"><label for="calc-notes">Notas y condiciones</label><textarea id="calc-notes" rows="3" maxlength="2000"></textarea></div></div></fieldset>
+      <details class="calc-panel"><summary>Cómo se calcula</summary><p class="calc-help">Filamento = gramos usados ÷ gramos del rollo × precio del rollo. El recargo se aplica solo al material. Electricidad = horas × W ÷ 1000 × precio/kWh. Máquina = horas × precio × (1 + reserva de mantenimiento) ÷ (años × 365 × horas diarias). Se suman mano de obra y otros gastos; luego se multiplica por cantidad. El descuento se aplica primero, después la urgencia y finalmente el impuesto. Los cálculos conservan precisión interna; los importes visibles se redondean a dos decimales.</p></details>
+      <button type="button" id="calc-reset" class="calc-secondary">Restablecer valores</button>
+    </form>
+    <aside class="calc-summary" aria-labelledby="calc-total-title">
+      <h2 id="calc-total-title" class="font-bold text-lg">Precio total</h2>
+      <p id="out-total" class="calc-total" aria-live="polite" aria-atomic="true">$0.00</p>
+      <p class="calc-help">USD</p>
+      <dl><div class="calc-result"><dt>Filamento</dt><dd id="out-material">$0.00</dd></div><div class="calc-result"><dt>Recargo de material</dt><dd id="out-markup">$0.00</dd></div><div class="calc-result"><dt>Electricidad</dt><dd id="out-energy">$0.00</dd></div><div class="calc-result"><dt>Mano de obra</dt><dd id="out-labor">$0.00</dd></div><div class="calc-result"><dt>Máquina y mantenimiento</dt><dd id="out-machine">$0.00</dd></div><div class="calc-result"><dt>Otros costos</dt><dd id="out-extras">$0.00</dd></div><div class="calc-result"><dt>Precio por pieza</dt><dd id="out-unit">$0.00</dd></div><div class="calc-result"><dt>Cantidad de piezas</dt><dd id="out-quantity">$0.00</dd></div><div class="calc-result"><dt>Total antes de ajustes</dt><dd id="out-base">$0.00</dd></div><div class="calc-result"><dt>Descuento</dt><dd id="out-discount">$0.00</dd></div><div class="calc-result"><dt>Urgencia</dt><dd id="out-rush">$0.00</dd></div><div class="calc-result"><dt>Subtotal</dt><dd id="out-subtotal">$0.00</dd></div><div class="calc-result"><dt>Impuesto</dt><dd id="out-tax">$0.00</dd></div></dl>
+      <p id="calc-error" class="calc-error" role="status" hidden>Revisa los valores: usa números válidos, cantidades positivas y un peso de rollo mayor que cero.</p>
+      <p class="calc-help mt-4">Cálculo orientativo en USD. No constituye una cotización confirmada.</p>
+      <button type="button" id="calc-copy" class="calc-primary">Copiar resumen</button>
+      <button type="button" id="calc-print" class="calc-secondary">Imprimir o guardar PDF</button>
+      <p id="calc-status" role="status" class="calc-help"></p>
+    </aside>
+  </div>
+  <pre id="calc-print-summary"></pre>
+</main>
+    <!-- Footer -->
+    <footer id="contacto" class="bg-v-dark text-gray-400 py-8 md:py-12 border-t border-gray-850 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0 flex flex-col items-center md:items-start text-center md:text-left">
+                <img src="vertice-logo-transparente.png" alt="Vértice 3D Logo" class="h-12 md:h-16 w-auto mb-3 md:mb-4 object-contain">
+                <p class="text-xs md:text-sm">Impresión 3D de alta calidad en Austin, TX.</p>
+            </div>
+            <div class="text-xs md:text-sm text-center md:text-right">
+                <p>Contáctanos para proyectos a medida:<br class="md:hidden"> DM @vertice3d_3d</p>
+                <p class="mt-2 text-[10px] md:text-xs text-gray-500">&copy; 2026 Vértice 3D. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const btnMenu = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const overlay = document.getElementById('menu-overlay');
+
+        function toggleMenu() {
+            if (menu.classList.contains('-translate-x-full')) {
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.add('opacity-100'), 10);
+                menu.classList.remove('-translate-x-full');
+            } else {
+                menu.classList.add('-translate-x-full');
+                overlay.classList.remove('opacity-100');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        btnMenu.addEventListener('click', toggleMenu);
+        document.getElementById('close-menu-btn').addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+    </script>
+</body>
+</html>

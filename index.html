@@ -66,8 +66,9 @@
         .v-language-bar{justify-content:center;gap:8px;padding:4px 16px;background:#FF5A00;border-bottom:1px solid #e65100;color:#fff;font-size:12px;font-weight:600}
         .v-language-bar select{min-width:0;min-height:36px;padding:4px 8px;border:1px solid #d1d5db;border-radius:6px;background:#fff;color:#242424;font-size:13px;font-weight:400;box-shadow:none;cursor:pointer}
         .v-language-bar select:focus-visible{outline:2px solid #242424;outline-offset:2px}
+    @media(min-width:768px) and (max-width:1100px){header nav{gap:10px!important;font-size:12px}header img{max-width:190px}}
     </style>
-    <script src="v-language.js?v=social-3" defer></script>
+    <script src="v-language.js?v=calculator-4" defer></script>
     <script src="cart.js?v=2" defer></script>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
@@ -92,7 +93,8 @@
                 
                 <nav class="hidden md:flex space-x-8">
                     <a href="index.html" class="text-gray-900 font-semibold hover:text-v-orange transition">Inicio</a>
-                    <a href="#catalogo" class="text-gray-700 hover:text-v-orange transition">Catálogo</a>                    <a href="#contacto" class="text-gray-700 hover:text-v-orange transition">Contacto</a>
+                    <a href="#catalogo" class="text-gray-700 hover:text-v-orange transition">Catálogo</a>                    <a href="calculator.html" class="text-gray-700 hover:text-v-orange transition">Calculadora de impresión</a>
+                    <a href="#contacto" class="text-gray-700 hover:text-v-orange transition">Contacto</a>
                 </nav>
                 <button type="button" data-open-cart class="cart-trigger" aria-label="Abrir carrito" aria-haspopup="dialog">
                     <svg aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3h2l2.4 12h11l3-9H6M9 20h.01M18 20h.01"/></svg>
@@ -114,7 +116,8 @@
         </div>
         <nav class="flex flex-col p-4 space-y-5">
             <a href="index.html" class="text-white font-bold hover:text-v-orange text-lg">Inicio</a>
-            <a href="#catalogo" onclick="toggleMenu()" class="text-white font-bold hover:text-v-orange text-lg">Catálogo</a>            <a href="#contacto" onclick="toggleMenu()" class="text-white font-bold hover:text-v-orange text-lg">Contacto</a>
+            <a href="#catalogo" onclick="toggleMenu()" class="text-white font-bold hover:text-v-orange text-lg">Catálogo</a>            <a href="calculator.html" class="text-white font-bold text-lg hover:text-v-orange transition">Calculadora de impresión</a>
+            <a href="#contacto" onclick="toggleMenu()" class="text-white font-bold hover:text-v-orange text-lg">Contacto</a>
         </nav>
     </div>
 
